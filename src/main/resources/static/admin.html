@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TableTurn | Admin</title>
+
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <script>
+
+fetch("/api/admin/check")
+    .then(response => {
+
+        if (!response.ok) {
+            window.location.href =
+                "/admin-login.html";
+        }
+
+    })
+    .catch(() => {
+
+        window.location.href =
+            "/admin-login.html";
+
+    });
+
+</script>
+
+<button onclick="logoutAdmin()">
+    Logout
+</button>
+
+<script>
+
+async function logoutAdmin() {
+
+    await fetch(
+        "/api/admin/logout",
+        {
+            method: "POST"
+        }
+    );
+
+    window.location.href =
+        "/admin-login.html";
+}
+
+</script>
+
+<header class="admin-header">
+
+    <div>
+        <div class="logo">Table<span>Turn</span></div>
+        <p>Restaurant Management</p>
+    </div>
+
+    <a href="/" class="view-site">
+        View Website →
+    </a>
+
+</header>
+
+
+<main class="admin-container">
+
+    <section class="welcome">
+
+        <p class="small-title">ADMIN DASHBOARD</p>
+
+        <h1>Manage your <span>restaurant</span></h1>
+
+        <p>
+            Add tables, manage seating and monitor your restaurant
+            reservations from one place.
+        </p>
+
+    </section>
+
+
+    <!-- ADD TABLE -->
+
+    <section class="admin-card">
+
+        <div class="card-heading">
+
+            <div>
+                <h2>Add a Table</h2>
+
+                <p>
+                    Create a new table for your restaurant.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>Table Number</label>
+
+                <input
+                    type="number"
+                    id="tableNumber"
+                    min="1"
+                    placeholder="Example: 5"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Capacity</label>
+
+                <input
+                    type="number"
+                    id="capacity"
+                    min="1"
+                    placeholder="Example: 4"
+                >
+
+            </div>
+
+
+            <button
+                class="primary-btn"
+                onclick="addTable()"
+            >
+                + Add Table
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- TABLE MANAGEMENT -->
+
+    <section class="admin-card">
+
+        <div class="card-heading">
+
+            <div>
+                <h2>Restaurant Tables</h2>
+
+                <p>
+                    Manage your tables and their current status.
+                </p>
+            </div>
+
+            <button
+                class="refresh-btn"
+                onclick="loadTables()"
+            >
+                ↻ Refresh
+            </button>
+
+        </div>
+
+
+        <div id="adminTableContainer" class="admin-table-container">
+
+            <div class="loading">
+                Loading tables...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RESERVATIONS -->
+
+    <section class="admin-card">
+
+        <div class="card-heading">
+
+            <div>
+                <h2>Reservations</h2>
+
+                <p>
+                    View all customer reservations.
+                </p>
+            </div>
+
+            <button
+                class="refresh-btn"
+                onclick="loadReservations()"
+            >
+                ↻ Refresh
+            </button>
+
+        </div>
+
+
+        <div id="reservationContainer">
+
+            <div class="loading">
+                Loading reservations...
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">Table<span>Turn</span></div>
+
+    <p>
+        Restaurant Management System
+    </p>
+
+</footer>
+
+
+<script src="admin.js"></script>
+
+</body>
+</html>

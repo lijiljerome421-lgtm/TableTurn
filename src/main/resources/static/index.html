@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>TableTurn | Restaurant Reservation</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="logo">
+        Table<span>Turn</span>
+    </div>
+
+    <nav>
+
+        <a href="#home">Home</a>
+
+        <a href="#reservation">Reserve</a>
+
+        <a href="#about">About</a>
+
+        <a href="/admin.html" class="admin-link">
+            Admin
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section id="home" class="hero">
+
+    <div class="hero-content">
+
+        <p class="eyebrow">
+            RESTAURANT TABLE RESERVATION
+        </p>
+
+        <h1>
+            Your table is
+            <span>waiting.</span>
+        </h1>
+
+        <p class="hero-text">
+            Choose your date, time and table.
+            We'll take care of the rest.
+        </p>
+
+        <button
+            class="hero-button"
+            onclick="scrollToReservation()"
+        >
+            Reserve a Table →
+        </button>
+
+    </div>
+
+
+    <div class="hero-decoration">
+
+        <div class="circle">
+
+            <span>TABLE</span>
+
+            <strong>TURN</strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= RESERVATION ================= -->
+
+<section
+    id="reservation"
+    class="reservation-section"
+>
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            MAKE A RESERVATION
+        </p>
+
+        <h2>
+            Find your perfect table
+        </h2>
+
+        <p>
+            Choose your date and time,
+            then we'll show you the tables
+            that fit your group.
+        </p>
+
+    </div>
+
+
+
+    <div class="reservation-card">
+
+
+        <!-- NAME -->
+
+        <div class="form-group">
+
+            <label for="customerName">
+                Your Name
+            </label>
+
+            <input
+                type="text"
+                id="customerName"
+                placeholder="Enter your name"
+                autocomplete="name"
+            >
+
+        </div>
+
+
+
+        <!-- DATE -->
+
+        <div class="form-group">
+
+            <label for="reservationDate">
+                Reservation Date
+            </label>
+
+            <div class="date-input-wrapper">
+
+                <span class="input-icon">
+                    📅
+                </span>
+
+                <input
+                    type="date"
+                    id="reservationDate"
+                >
+
+            </div>
+
+            <small>
+                Select a date from the calendar.
+            </small>
+
+        </div>
+
+
+
+        <!-- TIME -->
+
+        <div class="time-row">
+
+
+            <!-- START -->
+
+            <div class="form-group">
+
+                <label for="startTime">
+                    Arrival Time
+                </label>
+
+                <div class="select-wrapper">
+
+                    <span class="input-icon">
+                        🕐
+                    </span>
+
+                    <select id="startTime">
+
+                        <option value="">
+                            Select arrival time
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- END -->
+
+            <div class="form-group">
+
+                <label for="endTime">
+                    Leaving Time
+                </label>
+
+                <div class="select-wrapper">
+
+                    <span class="input-icon">
+                        🕐
+                    </span>
+
+                    <select id="endTime">
+
+                        <option value="">
+                            Select leaving time
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="opening-hours">
+
+            <span>🕒</span>
+
+            <div>
+
+                <strong>
+                    Restaurant Hours
+                </strong>
+
+                <p>
+                    11:00 AM – 10:00 PM
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- GUESTS -->
+
+        <div class="form-group">
+
+            <label for="partySize">
+                Number of Guests
+            </label>
+
+            <select id="partySize">
+
+                <option value="">
+                    Select number of guests
+                </option>
+
+            </select>
+
+            <small id="capacityInfo">
+                Loading restaurant capacity...
+            </small>
+
+        </div>
+
+
+
+        <!-- FIND TABLE -->
+
+        <button
+            class="find-button"
+            onclick="findTables()"
+        >
+            Find Available Tables →
+        </button>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= TABLES ================= -->
+
+<section
+    id="tables"
+    class="tables-section"
+>
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            AVAILABLE TABLES
+        </p>
+
+        <h2>
+            Choose your table
+        </h2>
+
+        <p id="tableAvailabilityInfo">
+            Select your date, time and guests first.
+        </p>
+
+    </div>
+
+
+
+    <div
+        id="tableContainer"
+        class="table-container"
+    >
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                ◯
+            </div>
+
+            <h3>
+                No table selected
+            </h3>
+
+            <p>
+                Enter your reservation details
+                to see available tables.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- SELECTED TABLE -->
+
+    <div
+        id="selectedInfo"
+        class="selected-info"
+    >
+
+        <p>
+            No table selected
+        </p>
+
+    </div>
+
+
+
+    <!-- RESERVE -->
+
+    <button
+        id="reserveButton"
+        class="reserve-button"
+        onclick="reserveTable()"
+        disabled
+    >
+        Confirm Reservation
+    </button>
+
+</section>
+
+
+
+<!-- ================= SUCCESS ================= -->
+
+<section
+    id="successSection"
+    class="success-section"
+    style="display:none;"
+>
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <p class="eyebrow">
+            RESERVATION CONFIRMED
+        </p>
+
+        <h2>
+            You're all set!
+        </h2>
+
+        <p id="successMessage">
+            Your table has been successfully reserved.
+        </p>
+
+        <button
+            class="new-reservation-button"
+            onclick="startNewReservation()"
+        >
+            Make Another Reservation
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= ABOUT ================= -->
+
+<section
+    id="about"
+    class="about-section"
+>
+
+    <div>
+
+        <p class="eyebrow">
+            ABOUT TABLETURN
+        </p>
+
+        <h2>
+            Simple reservations.
+            Better dining.
+        </h2>
+
+    </div>
+
+    <p>
+
+        TableTurn makes restaurant reservations
+        simple. Choose your preferred date,
+        time and table, then arrive knowing
+        your table is ready.
+
+    </p>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="logo">
+        Table<span>Turn</span>
+    </div>
+
+    <p>
+        Restaurant Table Reservation System
+    </p>
+
+</footer>
+
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
